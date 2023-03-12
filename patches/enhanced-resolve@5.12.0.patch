@@ -1,0 +1,40 @@
+diff --git a/lib/util/path.js b/lib/util/path.js
+index d7c148a4db150f7162fd92ba1da06cd690a0314f..3b26ab315304477a4719e805b4e48e177544603c 100644
+--- a/lib/util/path.js
++++ b/lib/util/path.js
+@@ -18,7 +18,7 @@ const CHAR_DOT = ".".charCodeAt(0);
+ const CHAR_COLON = ":".charCodeAt(0);
+ 
+ const posixNormalize = path.posix.normalize;
+-const winNormalize = path.win32.normalize;
++// const winNormalize = path.win32.normalize;
+ 
+ /**
+  * @enum {number}
+@@ -126,7 +126,7 @@ const normalize = p => {
+ 		case PathType.Empty:
+ 			return p;
+ 		case PathType.AbsoluteWin:
+-			return winNormalize(p);
++			return path.win32.normalize(p);
+ 		case PathType.Relative: {
+ 			const r = posixNormalize(p);
+ 			return getType(r) === PathType.Relative ? r : `./${r}`;
+@@ -148,7 +148,7 @@ const join = (rootPath, request) => {
+ 		case PathType.AbsolutePosix:
+ 			return posixNormalize(request);
+ 		case PathType.AbsoluteWin:
+-			return winNormalize(request);
++			return path.win32.normalize(request);
+ 	}
+ 	switch (getType(rootPath)) {
+ 		case PathType.Normal:
+@@ -156,7 +156,7 @@ const join = (rootPath, request) => {
+ 		case PathType.AbsolutePosix:
+ 			return posixNormalize(`${rootPath}/${request}`);
+ 		case PathType.AbsoluteWin:
+-			return winNormalize(`${rootPath}\\${request}`);
++			return path.win32.normalize(`${rootPath}\\${request}`);
+ 	}
+ 	switch (requestType) {
+ 		case PathType.Empty:
