@@ -6,14 +6,9 @@ module.exports = (env) => {
   /**
    * @type {import('webpack').Configuration}
    */
-  return {
+  const shared = {
     mode: production ? 'production' : 'development',
     entry: './src/index.js',
-    output: {
-      library: {
-        type: 'commonjs2',
-      },
-    },
     resolve: {
       alias: {
         // os.cpus() of 'node:os' polyfill is [],
@@ -53,4 +48,24 @@ module.exports = (env) => {
       }),
     ],
   };
+
+  return [
+    {
+      output: {
+        library: {
+          type: 'module',
+        },
+      },
+      experiments: {
+        outputModule: true,
+      },
+    },
+    {
+      output: {
+        library: {
+          type: 'commonjs2',
+        },
+      },
+    }
+  ].map(i => ({ ...shared, ...i }));
 }
