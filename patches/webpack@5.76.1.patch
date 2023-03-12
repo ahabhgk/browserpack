@@ -1,0 +1,13 @@
+diff --git a/lib/WebpackOptionsApply.js b/lib/WebpackOptionsApply.js
+index 96a485f7400a0bc49b1ab8b2b88f36f157ce7840..1ea2be8ad36435cc8eabd0a79ea7178ca8c681a1 100644
+--- a/lib/WebpackOptionsApply.js
++++ b/lib/WebpackOptionsApply.js
+@@ -563,7 +563,7 @@ class WebpackOptionsApply extends OptionsApply {
+ 		if (options.optimization.nodeEnv) {
+ 			const DefinePlugin = require("./DefinePlugin");
+ 			new DefinePlugin({
+-				"process.env.NODE_ENV": JSON.stringify(options.optimization.nodeEnv)
++				[eval("\"process.env.NODE_ENV\"")]: JSON.stringify(options.optimization.nodeEnv)
+ 			}).apply(compiler);
+ 		}
+ 		if (options.optimization.minimize) {

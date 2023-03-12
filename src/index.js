@@ -1,14 +1,14 @@
 import './polyfill.js';
-import webpack, { Configuration } from 'webpack';
+import webpack from 'webpack';
 import path from 'path';
 import fs from 'memfs';
 
-export default function browserpack(options: Configuration, callback?: (err?: Error, stats?: webpack.Stats) => void) {
+export default function browserpack(options, callback) {
   options.infrastructureLogging = {
     level: 'info',
     debug: false,
 		console,
-		stream: { isTTY: false } as any,
+		stream: { isTTY: false },
 		...options.infrastructureLogging,
   };
   options.snapshot ??= {};
